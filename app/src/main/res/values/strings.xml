@@ -3,4 +3,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="question">باقیمانده عدد بالای رو به پایینی حدس بزنید</string>
+    <string name="dice">Dice</string>
 </resources>
