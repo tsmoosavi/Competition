@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -39,6 +40,13 @@ class playFragment : Fragment() {
         binding.scoreTxv.text = playVm.score.toString()
         add()
         if (playVm.questionNumber == 0){
+            binding.start?.visibility = View.VISIBLE
+            binding.aNumberTxv.visibility = View.GONE
+            binding.bNumberTxv.visibility = View.GONE
+            binding.leftOver.visibility = View.GONE
+            for (button in btnArray){
+                button.visibility = View.GONE
+            }
                 dice()
         }
         diceClick()
@@ -47,11 +55,18 @@ class playFragment : Fragment() {
     private fun diceClick() {
         binding.diceBtn.setOnClickListener {
             playVm.questionNumber++
+            binding.start?.visibility = View.GONE
+            binding.aNumberTxv.visibility = View.VISIBLE
+            binding.bNumberTxv.visibility = View.VISIBLE
+            binding.leftOver.visibility = View.VISIBLE
+            for (button in btnArray){
+                button.visibility = View.VISIBLE
+            }
             if (playVm.questionNumber>=6){
                 if (playVm.maxScore < playVm.score){
                     playVm.maxScore = playVm.score
                 }
-                playVm.questionNumber=1
+                playVm.questionNumber=0
                findNavController().navigate(R.id.action_playFragment_to_resultFragment)
             }
             else {
@@ -100,14 +115,14 @@ class playFragment : Fragment() {
 
     fun correctAnswer(button: Button){
         if(button.text==mode.toString()){
-            //Toast.makeText(this,"correct",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"correct",Toast.LENGTH_SHORT).show()
             playVm.score+=5
             binding.scoreTxv.text=playVm.score.toString()
 //            button.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
 
             disableButton()
         } else{
-            //Toast.makeText(this,"incorrect",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"incorrect",Toast.LENGTH_SHORT).show()
             playVm.score-=2
             binding.scoreTxv.text = playVm.score.toString()
 //            button.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
