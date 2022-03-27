@@ -1,6 +1,6 @@
 package com.example.competition
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -117,22 +117,22 @@ class playFragment : Fragment() {
         }
     }
 
-    fun correctAnswer(button: Button){
-        if(button.text==mode.toString()){
-            Toast.makeText(context,"correct",Toast.LENGTH_SHORT).show()
-            playVm.score+=5
-            binding.scoreTxv.text=playVm.score.toString()
-//            button.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
+    @SuppressLint("ResourceAsColor")
+    fun correctAnswer(button: Button) = if(button.text==mode.toString()){
+        Toast.makeText(context,"correct",Toast.LENGTH_SHORT).show()
+        playVm.score+=5
+        binding.scoreTxv.text=playVm.score.toString()
+        button.setBackgroundColor(resources.getColor(R.color.green))
+//        button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
 
-            disableButton()
-        } else{
-            Toast.makeText(context,"incorrect",Toast.LENGTH_SHORT).show()
-            playVm.score-=2
-            binding.scoreTxv.text = playVm.score.toString()
-//            button.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
-            disableButton()
-        }
-
+        disableButton()
+    } else{
+        Toast.makeText(context,"incorrect",Toast.LENGTH_SHORT).show()
+        playVm.score-=2
+        binding.scoreTxv.text = playVm.score.toString()
+        button.setBackgroundColor(resources.getColor(R.color.red))
+//      button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
+        disableButton()
     }
 
     private fun disableButton() {

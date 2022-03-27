@@ -1,7 +1,6 @@
 package com.example.competition
 
-import android.content.Intent
-import android.os.Build
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.competition.databinding.FragmentResultBinding
-import com.google.android.material.internal.ContextUtils
 
 
 class ResultFragment : Fragment() {
@@ -39,8 +37,6 @@ class ResultFragment : Fragment() {
         binding.score.text="your score is  ${resultVm.score}"
 
         binding.exitBtn.setOnClickListener {
-//            resultVm.questionNumber=0
-//            resultVm.score=0
             exitApplication()
         }
 

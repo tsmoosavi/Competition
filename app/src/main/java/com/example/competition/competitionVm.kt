@@ -18,7 +18,7 @@ class competitionVm: ViewModel() {
         return b
     }
     fun getRandom():Int{
-        return (1 .. 10).random()
+        return (1 .. 9).random()
     }
     fun answer():Int{
         return a % b
