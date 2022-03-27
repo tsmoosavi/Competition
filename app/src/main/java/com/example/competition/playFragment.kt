@@ -22,7 +22,7 @@ class playFragment : Fragment() {
     var  btnArray = arrayListOf<Button>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.title = "play"
+        activity?.title = "Game"
 
     }
 
@@ -39,6 +39,11 @@ class playFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.scoreTxv.text = playVm.score.toString()
         add()
+        startGame()
+        diceClick()
+    }
+
+    private fun startGame() {
         if (playVm.questionNumber == 0){
             binding.start?.visibility = View.VISIBLE
             binding.aNumberTxv.visibility = View.GONE
@@ -47,9 +52,8 @@ class playFragment : Fragment() {
             for (button in btnArray){
                 button.visibility = View.GONE
             }
-                dice()
+            dice()
         }
-        diceClick()
     }
 
     private fun diceClick() {
@@ -139,15 +143,15 @@ class playFragment : Fragment() {
 
     fun setTextButton(number:Int){
         for (i in btnArray.indices){
+            var randomNumber = 0
             if (number == i){
                 btnArray[i].text =mode.toString()
             }else{
-                btnArray[i].text=playVm.getRandom().toString()
+                btnArray[i].text = playVm.getRandom().toString()
             }
 
         }
     }
-
     fun add(){
         btnArray.add(binding.answer1Btn)
         btnArray.add(binding.answer2Btn)

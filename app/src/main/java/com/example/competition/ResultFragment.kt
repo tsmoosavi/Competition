@@ -1,12 +1,16 @@
 package com.example.competition
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.competition.databinding.FragmentResultBinding
+import com.google.android.material.internal.ContextUtils
 
 
 class ResultFragment : Fragment() {
@@ -27,6 +31,29 @@ class ResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
 
+    }
+    private fun initView() {
+        binding.highScore.text="the best recore is  ${resultVm.maxScore}"
+        binding.score.text="your score is  ${resultVm.score}"
+
+        binding.exitBtn.setOnClickListener {
+//            resultVm.questionNumber=0
+//            resultVm.score=0
+            exitApplication()
+        }
+
+
+        binding.replyBtn.setOnClickListener {
+            resultVm.questionNumber=0
+            resultVm.score=0
+             findNavController().navigate(R.id.action_resultFragment_to_playFragment)
+        }
+
+    }
+
+    fun exitApplication() {
+        activity?.finish()
     }
 }

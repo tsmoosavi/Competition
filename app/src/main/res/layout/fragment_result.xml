@@ -8,7 +8,7 @@
     tools:context=".ResultFragment">
 
     <TextView
-        android:id="@+id/record"
+        android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/scoreFinal_txv"
+        android:id="@+id/highScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/record" />
+        app:layout_constraintTop_toBottomOf="@id/score" />
 
     <Button
         android:id="@+id/reply_btn"
@@ -36,7 +36,7 @@
         android:text="try again"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scoreFinal_txv" />
+        app:layout_constraintTop_toBottomOf="@id/highScore" />
 
     <Button
         android:id="@+id/exit_btn"
