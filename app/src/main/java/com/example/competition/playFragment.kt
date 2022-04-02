@@ -32,7 +32,6 @@ class playFragment : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        saveDetaile()
@@ -131,17 +130,16 @@ class playFragment : Fragment() {
         playVm.a = playVm.randomNumberA()
         playVm.b =playVm.randomNumberB()
         playVm.mode=playVm.a%playVm.b
+        playVm.numberList.add(playVm.mode)
         binding.aNumberTxv.text = playVm.a.toString()
         binding.bNumberTxv.text = playVm.b.toString()
         binding.scoreTxv.text = playVm.score.toString()
         val numRandom = (0..3).random()
         setTextButton(numRandom)
         saveDetaile()
-
 //        for (button in btnArray){
 //            button.setOnClickListener {  }
 //        }
-
         binding.answer1Btn.setOnClickListener {
             correctAnswer(binding.answer1Btn)
         }
@@ -157,13 +155,13 @@ class playFragment : Fragment() {
     }
 
     @SuppressLint("ResourceAsColor")
-    fun correctAnswer(button: Button) = if(button.text == playVm.mode.toString()){
+    fun correctAnswer(button: Button) {
+        if(button.text == playVm.mode.toString()){
         Toast.makeText(context,"correct",Toast.LENGTH_SHORT).show()
         playVm.score+=5
         binding.scoreTxv.text=playVm.score.toString()
         button.setBackgroundColor(resources.getColor(R.color.green))
 //        button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
-
         disableButton()
     } else{
         Toast.makeText(context,"incorrect",Toast.LENGTH_SHORT).show()
@@ -173,6 +171,7 @@ class playFragment : Fragment() {
 //      button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
         disableButton()
     }
+}
 
     private fun disableButton() {
         for (button in btnArray){
@@ -185,20 +184,25 @@ class playFragment : Fragment() {
         for (i in btnArray.indices){
             if (number == i){
                 btnArray[i].text = playVm.mode.toString()
-            }else{
-                btnArray[i].text = playVm.getRandom().toString()
-//                playVm.numberList[j] = btnArray[i].text.toString().toInt()
-//                j++
-            }
 
+            }else{
+                var duplicate = true
+                while (duplicate){
+                   var randomNumber = playVm.getRandom()
+                    if (randomNumber !in playVm.numberList) {
+                        playVm.numberList.add(randomNumber)
+                        btnArray[i].text = randomNumber.toString()
+                        duplicate = false
+                    }
+                }
+            }
         }
     }
+
     fun add(){
         btnArray.add(binding.answer1Btn)
         btnArray.add(binding.answer2Btn)
         btnArray.add(binding.answer3Btn)
         btnArray.add(binding.answer4Btn)
     }
-
-
 }
