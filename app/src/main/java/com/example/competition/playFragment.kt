@@ -126,6 +126,7 @@ class playFragment : Fragment() {
     }
 
     private fun dice() {
+        playVm.numberList.clear()
         binding.levelTxv?.text = playVm.questionNumber.toString()
         playVm.a = playVm.randomNumberA()
         playVm.b =playVm.randomNumberB()
