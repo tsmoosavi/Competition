@@ -110,6 +110,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
+        android:id="@+id/level_txv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -121,5 +129,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/dice_btn"
         android:layout_marginBottom="20dp"/>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Level: "
+        app:layout_constraintTop_toTopOf="@id/level_txv"
+        app:layout_constraintBottom_toBottomOf="@id/level_txv"
+        app:layout_constraintEnd_toStartOf="@id/level_txv"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
