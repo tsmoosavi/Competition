@@ -35,7 +35,7 @@ class playFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        saveDetaile()
+//        saveDetaile()
 
         showDetaile()
 
@@ -136,6 +136,7 @@ class playFragment : Fragment() {
         binding.scoreTxv.text = playVm.score.toString()
         val numRandom = (0..3).random()
         setTextButton(numRandom)
+        saveDetaile()
 
 //        for (button in btnArray){
 //            button.setOnClickListener {  }
