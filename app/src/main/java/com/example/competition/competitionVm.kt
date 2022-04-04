@@ -3,9 +3,9 @@ package com.example.competition
 import androidx.lifecycle.ViewModel
 
 class competitionVm: ViewModel() {
-    var randomeNumber1 = -1
-    var randomeNumber2 = -1
-    var randomeNumber3 = -1
+    var green = 0
+    var red = 0
+    var enableStatus = true
     var startSentence = true
     var numberList = arrayListOf<Int>()
     var score=0
@@ -18,7 +18,7 @@ class competitionVm: ViewModel() {
     var buttonAnswer2Text = ""
     var buttonAnswer3Text = ""
     var buttonAnswer4Text = ""
-
+    var color = R.color.purple_500
     fun randomNumberA():Int{
         a = (1 .. 100).random()
         return a

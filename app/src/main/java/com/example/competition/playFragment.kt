@@ -14,8 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.competition.databinding.FragmentPlayBinding
 
 class playFragment : Fragment() {
-//    var a=0
-//    var b=0
     lateinit var binding: FragmentPlayBinding
     val playVm: competitionVm by activityViewModels()
     var  btnArray = arrayListOf<Button>()
@@ -23,7 +21,6 @@ class playFragment : Fragment() {
         super.onCreate(savedInstanceState)
         activity?.title = "Game"
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,14 +31,8 @@ class playFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        saveDetaile()
-
         showDetaile()
 
-        binding.levelTxv?.text = playVm.questionNumber.toString()
-        binding.scoreTxv.text = playVm.score.toString()
-        binding.aNumberTxv .text = playVm.a.toString()
-        binding.bNumberTxv .text = playVm.b.toString()
         if (playVm.startSentence){
             binding.start?.visibility = View.VISIBLE
             binding.leftOver.visibility = View.GONE
@@ -62,7 +53,37 @@ class playFragment : Fragment() {
         binding.answer2Btn .text = playVm.buttonAnswer2Text
         binding.answer3Btn .text = playVm.buttonAnswer3Text
         binding.answer4Btn .text = playVm.buttonAnswer4Text
+//        binding.answer1Btn .isEnabled = playVm.enableStatus
+//        binding.answer2Btn .isEnabled = playVm.enableStatus
+//        binding.answer3Btn .isEnabled = playVm.enableStatus
+//        binding.answer4Btn .isEnabled = playVm.enableStatus
         binding.scoreTxv.text = playVm.score.toString()
+        binding.levelTxv?.text = playVm.questionNumber.toString()
+//        if (playVm.green > 0){
+//            for (i in 0 until btnArray.size ){
+//                if (i == playVm.green){
+//                    btnArray[i].setBackgroundColor(resources.getColor(R.color.green))
+//                }else{
+//                    btnArray[i].setBackgroundColor(resources.getColor(R.color.purple_500))
+//                }
+//            }
+//        }
+//        if (playVm.red > 0){
+//            for (i in 0 until btnArray.size ){
+//                if (i == playVm.red){
+//                    btnArray[i].setBackgroundColor(resources.getColor(R.color.red))
+//                }else{
+//                    btnArray[i].setBackgroundColor(resources.getColor(R.color.purple_500))
+//                }
+//            }
+//        }
+
+
+
+//        binding.answer1Btn.setBackgroundColor(resources.getColor(playVm.color))
+//        binding.answer2Btn.setBackgroundColor(resources.getColor(playVm.color))
+//        binding.answer3Btn.setBackgroundColor(resources.getColor(playVm.color))
+//        binding.answer4Btn.setBackgroundColor(resources.getColor(playVm.color))
 
     }
 
@@ -88,6 +109,9 @@ class playFragment : Fragment() {
     }
 
     private fun diceClick() {
+        playVm.green = 0
+        playVm.red = 0
+        playVm.enableStatus = true
         binding.diceBtn.setOnClickListener {
             playVm.startSentence = false
             playVm.questionNumber++
@@ -107,9 +131,6 @@ class playFragment : Fragment() {
                findNavController().navigate(R.id.action_playFragment_to_resultFragment)
             }
             else {
-                for (button in btnArray) {
-//                    button.setBackgroundColor(resources.getColor(R.color.purple_500))
-                }
                 enableButton()
                 for (button in btnArray){
                     button.setBackgroundColor(resources.getColor(R.color.purple_500))
@@ -119,13 +140,9 @@ class playFragment : Fragment() {
         }
     }
 
-    private fun enableButton() {
-        for (button in btnArray){
-            button.isEnabled=true
-        }
-    }
 
     private fun dice() {
+        playVm.enableStatus = true
         playVm.numberList.clear()
         binding.levelTxv?.text = playVm.questionNumber.toString()
         playVm.a = playVm.randomNumberA()
@@ -142,41 +159,62 @@ class playFragment : Fragment() {
 //            button.setOnClickListener {  }
 //        }
         binding.answer1Btn.setOnClickListener {
-            correctAnswer(binding.answer1Btn)
+            correctAnswer(binding.answer1Btn,1)
         }
         binding.answer2Btn.setOnClickListener {
-            correctAnswer(binding.answer2Btn)
+            correctAnswer(binding.answer2Btn,2)
         }
         binding.answer3Btn.setOnClickListener {
-            correctAnswer(binding.answer3Btn)
+            correctAnswer(binding.answer3Btn,3)
         }
         binding.answer4Btn.setOnClickListener {
-            correctAnswer(binding.answer4Btn)
+            correctAnswer(binding.answer4Btn,4)
         }
     }
 
     @SuppressLint("ResourceAsColor")
-    fun correctAnswer(button: Button) {
+    fun correctAnswer(button: Button, indice: Int) {
         if(button.text == playVm.mode.toString()){
         Toast.makeText(context,"correct",Toast.LENGTH_SHORT).show()
         playVm.score+=5
         binding.scoreTxv.text=playVm.score.toString()
         button.setBackgroundColor(resources.getColor(R.color.green))
+            playVm.green = indice
+            playVm.color = R.color.green
 //        button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+//            for(i in 0 until btnArray.size){
+//               if(button.text == btnArray[i].text ) {
+//                   playVm.green = i
+//               }
+//            }
         disableButton()
     } else{
         Toast.makeText(context,"incorrect",Toast.LENGTH_SHORT).show()
         playVm.score-=2
         binding.scoreTxv.text = playVm.score.toString()
         button.setBackgroundColor(resources.getColor(R.color.red))
+            playVm.red = indice
 //      button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
+            playVm.color = R.color.red
+//            for(i in 0 until btnArray.size){
+//                if(button.text == btnArray[i].text ) {
+//                    playVm.red = i
+//                }
+//            }
         disableButton()
     }
 }
+    private fun enableButton() {
+        for (button in btnArray){
+            button.isEnabled=true
+            playVm.enableStatus = true
+        }
+    }
 
     private fun disableButton() {
         for (button in btnArray){
             button.isEnabled=false
+            playVm.enableStatus = false
         }
     }
 
