@@ -31,8 +31,16 @@ class playFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showDetaile()
 
+
+        showDetaile() // create the page like it was before turning the screen
+        add() // adding 4 button for answering to btnArray
+        startGame() // check for make some buttons and views visible or unvisible
+        diceClick() // manage events after clicking on dice button every time
+
+    }
+
+    private fun showDetaile() {
         if (playVm.startSentence){
             binding.start?.visibility = View.VISIBLE
             binding.leftOver.visibility = View.GONE
@@ -40,26 +48,29 @@ class playFragment : Fragment() {
             binding.leftOver.visibility = View.VISIBLE
             binding.start?.visibility = View.GONE
         }
-        add()
-        startGame()
-        diceClick()
-
-    }
-
-    private fun showDetaile() {
         binding.aNumberTxv .text = playVm.a.toString()
         binding.bNumberTxv .text = playVm.b.toString()
         binding.answer1Btn .text = playVm.buttonAnswer1Text
         binding.answer2Btn .text = playVm.buttonAnswer2Text
         binding.answer3Btn .text = playVm.buttonAnswer3Text
         binding.answer4Btn .text = playVm.buttonAnswer4Text
-//        binding.answer1Btn .isEnabled = playVm.enableStatus
-//        binding.answer2Btn .isEnabled = playVm.enableStatus
-//        binding.answer3Btn .isEnabled = playVm.enableStatus
-//        binding.answer4Btn .isEnabled = playVm.enableStatus
+        binding.answer1Btn .isClickable = playVm.enableStatus
+        binding.answer2Btn .isClickable = playVm.enableStatus
+        binding.answer3Btn .isClickable = playVm.enableStatus
+        binding.answer4Btn .isClickable = playVm.enableStatus
         binding.scoreTxv.text = playVm.score.toString()
         binding.levelTxv?.text = playVm.questionNumber.toString()
-//        if (playVm.green > 0){
+        for (i in 0 until btnArray.size ){
+            if (i == playVm.chosenButton){
+                btnArray[i].setBackgroundColor(resources.getColor(playVm.color))
+            }else{
+                btnArray[i].setBackgroundColor(resources.getColor(R.color.purple_500))
+            }
+        }
+
+
+
+//        if (playVm.green > -1){
 //            for (i in 0 until btnArray.size ){
 //                if (i == playVm.green){
 //                    btnArray[i].setBackgroundColor(resources.getColor(R.color.green))
@@ -68,7 +79,7 @@ class playFragment : Fragment() {
 //                }
 //            }
 //        }
-//        if (playVm.red > 0){
+//        if (playVm.red > -1){
 //            for (i in 0 until btnArray.size ){
 //                if (i == playVm.red){
 //                    btnArray[i].setBackgroundColor(resources.getColor(R.color.red))
@@ -95,6 +106,7 @@ class playFragment : Fragment() {
     }
 
     private fun startGame() {
+
         if (playVm.questionNumber == 0){
             playVm.startSentence = true
             binding.start?.visibility = View.VISIBLE
@@ -109,8 +121,7 @@ class playFragment : Fragment() {
     }
 
     private fun diceClick() {
-        playVm.green = 0
-        playVm.red = 0
+        playVm.chosenButton = -1
         playVm.enableStatus = true
         binding.diceBtn.setOnClickListener {
             playVm.startSentence = false
@@ -179,21 +190,16 @@ class playFragment : Fragment() {
         playVm.score+=5
         binding.scoreTxv.text=playVm.score.toString()
         button.setBackgroundColor(resources.getColor(R.color.green))
-            playVm.green = indice
+            playVm.chosenButton = indice
             playVm.color = R.color.green
 //        button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
-//            for(i in 0 until btnArray.size){
-//               if(button.text == btnArray[i].text ) {
-//                   playVm.green = i
-//               }
-//            }
         disableButton()
     } else{
         Toast.makeText(context,"incorrect",Toast.LENGTH_SHORT).show()
         playVm.score-=2
         binding.scoreTxv.text = playVm.score.toString()
         button.setBackgroundColor(resources.getColor(R.color.red))
-            playVm.red = indice
+            playVm.chosenButton = indice
 //      button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
             playVm.color = R.color.red
 //            for(i in 0 until btnArray.size){
@@ -206,14 +212,14 @@ class playFragment : Fragment() {
 }
     private fun enableButton() {
         for (button in btnArray){
-            button.isEnabled=true
+            button.isClickable = true
             playVm.enableStatus = true
         }
     }
 
     private fun disableButton() {
         for (button in btnArray){
-            button.isEnabled=false
+            button.isClickable =false
             playVm.enableStatus = false
         }
     }

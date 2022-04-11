@@ -3,8 +3,7 @@ package com.example.competition
 import androidx.lifecycle.ViewModel
 
 class competitionVm: ViewModel() {
-    var green = 0
-    var red = 0
+    var chosenButton = -1
     var enableStatus = true
     var startSentence = true
     var numberList = arrayListOf<Int>()
